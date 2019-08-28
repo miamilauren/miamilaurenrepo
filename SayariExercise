@@ -1,0 +1,41 @@
+##First Try
+from bs4 import BeautifulSoup as soup
+from urllib.request import urlopen as uReq
+
+my_Url = "https://firststop.sos.nd.gov/search/business"
+
+uClient = uReq(myUrl)
+page_html = uClient.read
+uClient.close()
+page_soup = soup(page_html, "html.parser")
+
+containers = page_soup.findAll("div", {"class": search-input})
+print(containers)
+
+
+
+##Second Try
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 28 06:06:06 2019
+
+@author: lnbrown
+"""
+
+from bs4 import BeautifulSoup
+import bs4 as bs
+import urllib
+import urllib.request
+import requests
+sauce = urllib.request.urlopen('https://firststop.sos.nd.gov/search/business').read()
+soup = bs.BeautifulSoup(sauce, 'lxml')
+
+
+##Third Try
+import requests
+from bs4 import BeautifulSoup
+r = requests.get("https://firststop.sos.nd.gov/api/Records/businesssearc", params=dict(
+        query="web scraping", 
+        page=2
+        ))
+print (r.text)
