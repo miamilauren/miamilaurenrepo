@@ -1,0 +1,42 @@
+library(dplyr)
+library(Hmisc)
+library(tidyverse)
+library (DataExplorer)
+library(plotly)
+library(breakDown)
+
+
+MA_Exer_PikesPeak_Females <- read.delim("C:/Users/lnbrown/Desktop/MA Exercise_20180328-2/MA_Exer_PikesPeak_Females.txt")
+MA_Exer_PikesPeak_Males <- read.delim("C:/Users/lnbrown/Desktop/MA Exercise_20180328-2/MA_Exer_PikesPeak_Males.txt")
+MFemales <- MA_Exer_PikesPeak_Females
+MMales <- MA_Exer_PikesPeak_Males
+is.na(MMales)
+is.na(MFemales)
+plot_missing(MMales)
+plot_missing(MFemales)
+str(MMales)
+str(MFemales)
+
+
+summary(MMales)
+summary (MFemales)
+plot_histogram(MMales)
+plot_histogram(MFemales)
+
+
+#This table sometimes gives errors when reproducing but I am unsure why.
+GunNet_Tbl <- MMales %>%
+  select(Name, Gun.Tim, Net.Tim)
+FGunNet_Tbl <- MFemales %>%
+  select(Name, Gun.Tim, Net.Tim)
+describe (GunNet_Tbl)
+describe (FGunNet_Tbl)
+
+
+PercentileData <- MMales
+  PercentileData = mutate(PercentileData, percentile_rank = ntile(MMales$Net.Tim, 100))
+  head(PercentileData)
+
+FPercentileData <- MFemales
+  FPercentileData = mutate(FPercentileData, percentile_rank = ntile(MFemales$Net.Tim, 100))
+  head(FPercentileData)
