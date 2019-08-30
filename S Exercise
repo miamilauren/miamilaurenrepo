@@ -1,20 +1,3 @@
-##First Try
-from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen as uReq
-
-my_Url = "https://firststop.sos.nd.gov/search/business"
-
-uClient = uReq(myUrl)
-page_html = uClient.read
-uClient.close()
-page_soup = soup(page_html, "html.parser")
-
-containers = page_soup.findAll("div", {"class": search-input})
-print(containers)
-
-
-
-##Second Try
 # -*- coding: utf-8 -*-
 """
 Created on Wed Aug 28 06:06:06 2019
@@ -27,15 +10,30 @@ import bs4 as bs
 import urllib
 import urllib.request
 import requests
+import urllib.parse
 sauce = urllib.request.urlopen('https://firststop.sos.nd.gov/search/business').read()
 soup = bs.BeautifulSoup(sauce, 'lxml')
+params = {
+     "ACTIVE_ONLY_YN":	"true",
+      "SEARCH_VALUE": "x",
+      "STARTS_WITH_YN":	"true "
+      }
+query_string = urllib.parse.urlencode( params )    
+data = query_string.encode( "ascii" )    
 
+with urllib.request.urlopen( 'https://firststop.sos.nd.gov/api/Records/businesssearch', data ) as response:     
+    response_text = response.read()     
+    print( response_text ) 
+############################
+    
+import igraph as ig
+import json
+import urllib2
 
-##Third Try
-import requests
-from bs4 import BeautifulSoup
-r = requests.get("https://firststop.sos.nd.gov/api/Records/businesssearc", params=dict(
-        query="web scraping", 
-        page=2
-        ))
-print (r.text)
+data = []
+req = urllib2.request ('https://firststop.sos.nd.gov/api/Records/businesssearch', data ) as response:     
+    response_text = response.read()
+opener = urllib2.build_openiner()
+f = opener.opn(req)
+data = json.loads(f.read)
+print data.keys()
